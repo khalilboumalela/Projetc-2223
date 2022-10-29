@@ -3,6 +3,7 @@
 #include <QString>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
+#include <QtDebug>
 
 class employes
 {
@@ -23,7 +24,7 @@ public:
     int Gettel(){return tel;}
     float Getsalaire(){return salaire;}
 
-    ////Setter
+    ////Setters
 
     void setnom(QString n){nom=n;}
     void setprenom(QString n){prenom=n;}
@@ -34,6 +35,8 @@ public:
     void setsalaire(float n){salaire=n;}
     bool ajouter();
     QSqlQueryModel * afficher();
-    bool supprimer();
+    bool supprimer(int);
+    bool modifier(QString,QString,int,QString,int,QString,float);
+};
 
 #endif // EMPLOYES_H

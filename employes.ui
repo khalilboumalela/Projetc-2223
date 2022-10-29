@@ -398,22 +398,6 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="background_8">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>-10</y>
-        <width>781</width>
-        <height>421</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../ground.jpg</pixmap>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
        <rect>
@@ -495,25 +479,6 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
         <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
-     <zorder>background_8</zorder>
-     <zorder>l_CIN</zorder>
-     <zorder>ajouter</zorder>
-     <zorder>l_prenom</zorder>
-     <zorder>l_nom</zorder>
-     <zorder>l_salaire</zorder>
-     <zorder>l_tel</zorder>
-     <zorder>label</zorder>
-     <zorder>label_3</zorder>
-     <zorder>label_4</zorder>
-     <zorder>label_5</zorder>
-     <zorder>label_6</zorder>
-     <zorder>label_7</zorder>
-     <zorder>label_2</zorder>
-     <zorder>button_modifier</zorder>
-     <zorder>l_sexe</zorder>
-     <zorder>comboBox</zorder>
-     <zorder>pushButton_9</zorder>
-     <zorder>supprimer_2</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
