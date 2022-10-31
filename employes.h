@@ -36,7 +36,8 @@ public:
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int);
-    bool modifier(QString,QString,int,QString,int,QString,float);
+    employes modifier(QString);
+    bool modifier2(QString,employes);
 };
 
 #endif // EMPLOYES_H

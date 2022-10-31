@@ -24,6 +24,10 @@ private slots:
 
     void on_modifier_clicked();
 
+    void on_modifier_toggled(bool checked);
+
+    void on_modifier_2_clicked();
+
 private:
     Ui::Emp *ui;
     employes e;

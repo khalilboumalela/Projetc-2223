@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_seconnecter_clicked()
 {Emp e;
     Connection c;
-    if ((ui->nomut_in->text()=="khalil") && (ui->mdp_in->text()=="khalil"))
+    if ((ui->nomut_in->text()=="") && (ui->mdp_in->text()==""))
 {
         bool test=true;
         c.createconnect();

@@ -18,8 +18,8 @@
     <rect>
      <x>70</x>
      <y>70</y>
-     <width>631</width>
-     <height>511</height>
+     <width>671</width>
+     <height>531</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -62,6 +62,12 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
        <width>113</width>
        <height>25</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>113</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="styleSheet">
       <string notr="true">QLineEdit
@@ -292,9 +298,9 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
     <widget class="QPushButton" name="modifier">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>120</y>
-       <width>112</width>
+       <x>401</x>
+       <y>340</y>
+       <width>141</width>
        <height>41</height>
       </rect>
      </property>
@@ -438,8 +444,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QPushButton" name="supprimer">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>180</y>
+       <x>540</x>
+       <y>100</y>
        <width>111</width>
        <height>41</height>
       </rect>
@@ -476,6 +482,122 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
      <property name="icon">
       <iconset theme="poubelle">
        <normaloff>../../../../Desktop/Projetcpp</normaloff>../../../../Desktop/Projetcpp</iconset>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="l_CIN_2">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>110</y>
+       <width>113</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit
+{
+border-radius:9px;
+border: 2px solid #000000;
+background: qradialgradient(cx: 0.3, cy: -0.4,
+fx: 0.0, fy: -0.0,
+radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>80</y>
+       <width>69</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CIN:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="l_CIN_3">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>240</y>
+       <width>113</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>113</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit
+{
+border-radius:9px;
+border: 2px solid #000000;
+background: qradialgradient(cx: 0.3, cy: -0.4,
+fx: 0.0, fy: -0.0,
+radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="modifier_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>280</y>
+       <width>221</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+color: #ffffff;
+border: 3px solid #010203;
+font: 8pt &quot;MS Reference Sans Serif&quot;;
+border-radius: 15px;
+padding: 5px;
+background: qradialgradient(cx: 0.3, cy: -0.4,
+fx: 0.3, fy: -0.4,
+radius: 3, stop: 0 #010203, stop: 1 #c4c9c7);
+min-width: 80px;
+}
+
+QPushButton:hover {
+background: qradialgradient(cx: 0.3, cy: -0.4,
+fx: 0.3, fy: -0.4,
+radius: 3, stop: 0 #010203, stop: 1 #010203);
+}
+
+ QPushButton:pressed {
+background: qradialgradient(cx: 0.4, cy: -0.1,
+fx: 0.4, fy: -0.1,
+radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
+}</string>
+     </property>
+     <property name="text">
+      <string>Afficher avant mofication</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>240</y>
+       <width>69</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Old CIN:</string>
      </property>
     </widget>
    </widget>

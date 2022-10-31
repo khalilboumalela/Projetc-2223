@@ -1,5 +1,6 @@
 #include "employes.h"
 #include "connection.h"
+#include<QDebug>
 employes::employes()
 {
 
@@ -72,21 +73,59 @@ return model;
 }
 
 
-bool employes::modifier(QString, QString, int, QString, int, QString, float)
+employes employes::modifier(QString cin)
 {
+    employes E;
+     QSqlQueryModel model;
     QSqlQuery query;
 
-        query.prepare("UPDATE EMPLOYE SET NOM= :NOM,PRENOM= :PRENOM,SALAIRE= :SALAIRE, FONCTION= :FONCTION,TEL= :TEL,  SEXE= :SEXE    where CIN= :CIN ;");
-        query.bindValue(":CIN", cin);
-         query.bindValue(":NOM",nom);
-        query.bindValue(":PRENOM", prenom);
-        query.bindValue(":FONCTION",fonction);
-        query.bindValue(":SALAIRE",salaire);
-        query.bindValue(":SEXE",sexe);
-        query.bindValue(":TEL",tel);
+    model.setQuery("SELECT * from EMPLOYE WHERE (CIN LIKE '"+cin+"')");
+    QString Nom=model.data(model.index(0, 0)).toString();
+    QString Prenom=model.data(model.index(0, 1)).toString();
+    QString Salaire=model.data(model.index(0,3)).toString();
+    QString Cin=model.data(model.index(0, 2)).toString();
+    QString Fonction=model.data(model.index(0, 4)).toString();
+    QString Tel=model.data(model.index(0, 5)).toString();
+        QString Sexe=model.data(model.index(0, 6)).toString();
+       /* query.prepare("SELECT * from EMPLOYE WHERE CIN= :CIN");
+        query.bindValue(":CIN",cin);*/
 
-                return    query.exec();
 
+      //  qInfo() << "Nom"<<" "<<model.data(model.index(0, 1)).toString()<<endl;
+
+        E.setnom(Nom);
+       E.setprenom(Prenom);
+       E.setcin(Cin.toInt());
+       E.setsalaire(Salaire.toInt());
+       E.settel(Tel.toInt());
+       E.setfonction(Fonction);
+       E.setsexe(Sexe);
+
+                return    E;
+
+}
+
+bool employes::modifier2(QString cin,employes E)
+{
+QString Ssalaire;
+Ssalaire=Ssalaire.number(E.Getsalaire());
+QString Stel;
+Stel=Stel.number(E.Gettel());
+QString Scin;
+Scin=Scin.number(E.Getcin());
+    QSqlQuery query;
+
+       query.prepare("UPDATE EMPLOYE SET NOM= :nom, PRENOM= :prenom,CIN= :cin2 , SALAIRE= :salaire, FONCTION= :fonction, TEL= :tel ,SEXE= :sexe  where CIN= :cin ;");
+       query.bindValue(":cin", cin);
+        query.bindValue(":nom",E.Getnom());
+       query.bindValue(":prenom", E.Getprenom());
+       query.bindValue(":fonction",E.Getfonction());
+       query.bindValue(":salaire",Ssalaire);
+       query.bindValue(":cin2",Scin);
+       query.bindValue(":sexe",E.Getsexe());
+       query.bindValue(":tel",Stel);
+
+               return    query.exec();
 
 
 }
