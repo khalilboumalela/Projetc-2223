@@ -18,8 +18,8 @@
     <rect>
      <x>70</x>
      <y>70</y>
-     <width>671</width>
-     <height>531</height>
+     <width>731</width>
+     <height>581</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -48,7 +48,7 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -600,6 +600,32 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
       <string>Old CIN:</string>
      </property>
     </widget>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>380</y>
+       <width>301</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>299</width>
+        <height>159</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -610,8 +636,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
       <rect>
        <x>0</x>
        <y>90</y>
-       <width>451</width>
-       <height>241</height>
+       <width>511</width>
+       <height>321</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -628,8 +654,8 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
     <widget class="QPushButton" name="PDF">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>360</y>
+       <x>170</x>
+       <y>430</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -666,8 +692,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QLabel" name="background_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>-10</y>
+       <x>10</x>
+       <y>20</y>
        <width>781</width>
        <height>421</height>
       </rect>
@@ -698,8 +724,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QPushButton" name="Imprimer">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>360</y>
+       <x>350</x>
+       <y>430</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -733,30 +759,12 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
       <string>Imprimer</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_10">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>CIN:</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="l_r_2">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>32</x>
        <y>20</y>
-       <width>113</width>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
@@ -813,8 +821,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_cin">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>140</y>
+       <x>540</x>
+       <y>220</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -851,8 +859,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_nom">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>180</y>
+       <x>540</x>
+       <y>260</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -889,8 +897,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_fonct">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>220</y>
+       <x>540</x>
+       <y>300</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -929,7 +937,6 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <zorder>tab_etud</zorder>
     <zorder>PDF</zorder>
     <zorder>Imprimer</zorder>
-    <zorder>label_10</zorder>
     <zorder>l_r_2</zorder>
     <zorder>Recherche</zorder>
     <zorder>Tri_cin</zorder>

@@ -162,7 +162,7 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
      <property name="geometry">
       <rect>
        <x>340</x>
-       <y>340</y>
+       <y>290</y>
        <width>151</width>
        <height>31</height>
       </rect>
@@ -244,20 +244,7 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
       <string>Confirmer le mor de passe</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>300</y>
-       <width>111</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Adresse mail</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="l_CIN_3">
+    <widget class="QLineEdit" name="nomut_in2">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -280,30 +267,7 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
       <string/>
      </property>
     </widget>
-    <widget class="QLineEdit" name="l_CIN_4">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>300</y>
-       <width>161</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit
-{
-border-radius:9px;
-border: 2px solid #000000;
-background: qradialgradient(cx: 0.3, cy: -0.4,
-fx: 0.0, fy: -0.0,
-radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="l_CIN_5">
+    <widget class="QLineEdit" name="mdp_in2">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -329,7 +293,7 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
       <enum>QLineEdit::Password</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="l_CIN_6">
+    <widget class="QLineEdit" name="mdp_in3">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -353,59 +317,6 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>340</y>
-       <width>161</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QComboBox
-{
-border-radius:9px;
-border: 2px solid #000000;
-background: qradialgradient(cx: 0.3, cy: -0.4,
-fx: 0.0, fy: -0.0,
-radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
-}</string>
-     </property>
-     <item>
-      <property name="text">
-       <string>Administrateur</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Présenteur</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Montage</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-    </widget>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>111</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Fonction</string>
      </property>
     </widget>
    </widget>

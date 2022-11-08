@@ -5,6 +5,7 @@
 #include <QSqlQueryModel>
 #include <QtDebug>
 
+
 class employes
 {
    QString nom,prenom,sexe,fonction;
@@ -33,9 +34,11 @@ public:
     void setcin(int n){cin=n;}
     void settel(int n){tel=n;}
     void setsalaire(float n){salaire=n;}
+
     bool ajouter();
     QSqlQueryModel * afficher();
-    bool supprimer(int);
+     QSqlQueryModel * rechercher(const QString &aux);
+    int supprimer(int);
     employes modifier(QString);
     bool modifier2(QString,employes);
 };

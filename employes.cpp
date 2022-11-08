@@ -44,13 +44,25 @@ return query.exec() //&& test
 
 }
 
-bool employes::supprimer(int cin)
+int employes::supprimer(int cin)
 {
+QString Scin=QString::number(cin);
 
-    QSqlQuery query;
-    query.prepare("DELETE from EMPLOYE where cin = :id ;");
+
+     QSqlQueryModel model;
+     QSqlQuery query;
+      model.setQuery("SELECT * from EMPLOYE WHERE (CIN LIKE '"+Scin+"');");
+        QString Cin=model.data(model.index(0, 2)).toString();
+         Cin=model.data(model.index(0, 2)).toString();
+
+        qInfo() << "AA "<<Scin<<endl;
+        if (Cin=="")
+        return 2;
+        else
+    {query.prepare("DELETE from EMPLOYE where cin = :id ;");
     query.bindValue(":id",cin);
-    return    query.exec();
+
+    return    query.exec();}
 
 }
 
@@ -70,6 +82,22 @@ QSqlQueryModel * employes::afficher()
 
 return model;
 
+}
+
+QSqlQueryModel* employes::rechercher (const QString &aux)
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+
+    model->setQuery("select * from EMPLOYE where ((cin || nom || prenom || fonction || salaire || sexe||tel) LIKE '%"+aux+"%')");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Nom"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Prenom "));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("CIN "));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("salaire  "));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("fonction "));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("TEL"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("sexe"));
+
+    return model;
 }
 
 

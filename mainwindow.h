@@ -20,6 +20,8 @@ private slots:
 
     void on_oublie_clicked();
 
+    void on_creercmpt_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
