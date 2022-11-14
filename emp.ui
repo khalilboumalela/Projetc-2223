@@ -13,13 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
+  <property name="windowIcon">
+   <iconset theme="icone.png">
+    <normaloff>.</normaloff>.</iconset>
+  </property>
+  <widget class="QTabWidget" name="Emp_2">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>70</y>
-     <width>731</width>
-     <height>581</height>
+     <x>60</x>
+     <y>40</y>
+     <width>891</width>
+     <height>751</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -48,7 +52,7 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -634,10 +638,10 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QTableView" name="tab_etud">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>90</y>
-       <width>511</width>
-       <height>321</height>
+       <x>10</x>
+       <y>80</y>
+       <width>581</width>
+       <height>401</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -654,8 +658,8 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
     <widget class="QPushButton" name="PDF">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>430</y>
+       <x>260</x>
+       <y>500</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -724,8 +728,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QPushButton" name="Imprimer">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>430</y>
+       <x>460</x>
+       <y>500</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -762,9 +766,9 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QLineEdit" name="l_r_2">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>190</x>
        <y>20</y>
-       <width>131</width>
+       <width>181</width>
        <height>31</height>
       </rect>
      </property>
@@ -783,7 +787,7 @@ radius: 1.89, stop: 0 #ffffff, stop: 1 #999);
     <widget class="QPushButton" name="Recherche">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>390</x>
        <y>20</y>
        <width>96</width>
        <height>31</height>
@@ -821,8 +825,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_cin">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>220</y>
+       <x>610</x>
+       <y>290</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -859,8 +863,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_nom">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>260</y>
+       <x>610</x>
+       <y>330</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -897,8 +901,8 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <widget class="QRadioButton" name="Tri_fonct">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>300</y>
+       <x>610</x>
+       <y>370</y>
        <width>161</width>
        <height>31</height>
       </rect>
@@ -943,8 +947,38 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
     <zorder>Tri_nom</zorder>
     <zorder>Tri_fonct</zorder>
    </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Maps</string>
+    </attribute>
+    <widget class="WebAxWidget" name="WebBrowser">
+     <property name="control" stdset="0">
+      <string>{8856f961-340a-11d0-a96b-00c04fd705a2}</string>
+     </property>
+     <property name="geometry" stdset="0">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>541</width>
+       <height>461</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QAxWidget</class>
+   <extends>QWidget</extends>
+   <header>qaxwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WebAxWidget</class>
+   <extends>QAxWidget</extends>
+   <header location="global">webaxwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

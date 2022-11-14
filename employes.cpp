@@ -1,6 +1,7 @@
 #include "employes.h"
 #include "connection.h"
 #include<QDebug>
+
 employes::employes()
 {
 
@@ -19,7 +20,7 @@ employes::employes(QString nom,QString prenom,int cin,QString sexe,int tel,QStri
 
 bool employes::ajouter()
 {Connection c;
-   //  bool test=c.createconnect();
+    //  bool test=c.createconnect();
     QSqlQuery query;
     QString scin=QString::number(cin) ;
     QString stel=QString::number(tel) ;
@@ -38,31 +39,31 @@ bool employes::ajouter()
     query.bindValue(":TEL",tel);
     query.bindValue(":SEXE",sexe);
 
-return query.exec() //&& test
-        ;
+    return query.exec() //&& test
+            ;
 
 
 }
 
 int employes::supprimer(int cin)
 {
-QString Scin=QString::number(cin);
+    QString Scin=QString::number(cin);
 
 
-     QSqlQueryModel model;
-     QSqlQuery query;
-      model.setQuery("SELECT * from EMPLOYE WHERE (CIN LIKE '"+Scin+"');");
-        QString Cin=model.data(model.index(0, 2)).toString();
-         Cin=model.data(model.index(0, 2)).toString();
+    QSqlQueryModel model;
+    QSqlQuery query;
+    model.setQuery("SELECT * from EMPLOYE WHERE (CIN LIKE '"+Scin+"');");
+    QString Cin=model.data(model.index(0, 2)).toString();
+    Cin=model.data(model.index(0, 2)).toString();
 
-        qInfo() << "AA "<<Scin<<endl;
-        if (Cin=="")
+    qInfo() << "AA "<<Scin<<endl;
+    if (Cin=="")
         return 2;
-        else
+    else
     {query.prepare("DELETE from EMPLOYE where cin = :id ;");
-    query.bindValue(":id",cin);
+        query.bindValue(":id",cin);
 
-    return    query.exec();}
+        return    query.exec();}
 
 }
 
@@ -80,7 +81,7 @@ QSqlQueryModel * employes::afficher()
     model->setHeaderData(6,Qt::Horizontal,QObject::tr("SEXE"));
 
 
-return model;
+    return model;
 
 }
 
@@ -104,7 +105,7 @@ QSqlQueryModel* employes::rechercher (const QString &aux)
 employes employes::modifier(QString cin)
 {
     employes E;
-     QSqlQueryModel model;
+    QSqlQueryModel model;
     QSqlQuery query;
 
     model.setQuery("SELECT * from EMPLOYE WHERE (CIN LIKE '"+cin+"')");
@@ -114,46 +115,46 @@ employes employes::modifier(QString cin)
     QString Cin=model.data(model.index(0, 2)).toString();
     QString Fonction=model.data(model.index(0, 4)).toString();
     QString Tel=model.data(model.index(0, 5)).toString();
-        QString Sexe=model.data(model.index(0, 6)).toString();
-       /* query.prepare("SELECT * from EMPLOYE WHERE CIN= :CIN");
+    QString Sexe=model.data(model.index(0, 6)).toString();
+    /* query.prepare("SELECT * from EMPLOYE WHERE CIN= :CIN");
         query.bindValue(":CIN",cin);*/
 
 
-      //  qInfo() << "Nom"<<" "<<model.data(model.index(0, 1)).toString()<<endl;
+    //  qInfo() << "Nom"<<" "<<model.data(model.index(0, 1)).toString()<<endl;
 
-        E.setnom(Nom);
-       E.setprenom(Prenom);
-       E.setcin(Cin.toInt());
-       E.setsalaire(Salaire.toInt());
-       E.settel(Tel.toInt());
-       E.setfonction(Fonction);
-       E.setsexe(Sexe);
+    E.setnom(Nom);
+    E.setprenom(Prenom);
+    E.setcin(Cin.toInt());
+    E.setsalaire(Salaire.toInt());
+    E.settel(Tel.toInt());
+    E.setfonction(Fonction);
+    E.setsexe(Sexe);
 
-                return    E;
+    return    E;
 
 }
 
 bool employes::modifier2(QString cin,employes E)
 {
-QString Ssalaire;
-Ssalaire=Ssalaire.number(E.Getsalaire());
-QString Stel;
-Stel=Stel.number(E.Gettel());
-QString Scin;
-Scin=Scin.number(E.Getcin());
+    QString Ssalaire;
+    Ssalaire=Ssalaire.number(E.Getsalaire());
+    QString Stel;
+    Stel=Stel.number(E.Gettel());
+    QString Scin;
+    Scin=Scin.number(E.Getcin());
     QSqlQuery query;
 
-       query.prepare("UPDATE EMPLOYE SET NOM= :nom, PRENOM= :prenom,CIN= :cin2 , SALAIRE= :salaire, FONCTION= :fonction, TEL= :tel ,SEXE= :sexe  where CIN= :cin ;");
-       query.bindValue(":cin", cin);
-        query.bindValue(":nom",E.Getnom());
-       query.bindValue(":prenom", E.Getprenom());
-       query.bindValue(":fonction",E.Getfonction());
-       query.bindValue(":salaire",Ssalaire);
-       query.bindValue(":cin2",Scin);
-       query.bindValue(":sexe",E.Getsexe());
-       query.bindValue(":tel",Stel);
+    query.prepare("UPDATE EMPLOYE SET NOM= :nom, PRENOM= :prenom,CIN= :cin2 , SALAIRE= :salaire, FONCTION= :fonction, TEL= :tel ,SEXE= :sexe  where CIN= :cin ;");
+    query.bindValue(":cin", cin);
+    query.bindValue(":nom",E.Getnom());
+    query.bindValue(":prenom", E.Getprenom());
+    query.bindValue(":fonction",E.Getfonction());
+    query.bindValue(":salaire",Ssalaire);
+    query.bindValue(":cin2",Scin);
+    query.bindValue(":sexe",E.Getsexe());
+    query.bindValue(":tel",Stel);
 
-               return    query.exec();
+    return    query.exec();
 
 
 }

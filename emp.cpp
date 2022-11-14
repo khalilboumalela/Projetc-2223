@@ -9,6 +9,15 @@
 #include <QMenu>
 #include <QAction>
 #include <QFileDialog>
+#include <QPrinter>
+#include <QTextStream>
+#include <QFile>
+#include <QTextDocument>
+#include<QPdfWriter>
+#include<QSystemTrayIcon>
+#include<QPainter>
+#include <QSettings>
+
 
 Emp::Emp(QWidget *parent) :
     QDialog(parent),
@@ -20,7 +29,17 @@ Emp::Emp(QWidget *parent) :
        ui->l_salaire->setValidator(new QIntValidator(0,999999999,this));
        ui->tab_etud->setModel(e.afficher());
 
+       /////////maps
 
+       QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+                          QCoreApplication::organizationName(), QCoreApplication::applicationName());
+
+       ui->WebBrowser->dynamicCall("Navigate(const QString&)", "https://www.google.com/maps/place/ESPRIT/@36.9016729,10.1713215,15z");
+
+
+
+       //////////
+///////////camera
        mCamera =new QCamera(this);
        mCameraViewfinder = new QCameraViewfinder(this);
        mCameraImageCapture = new QCameraImageCapture(mCamera,this);
@@ -44,7 +63,7 @@ Emp::Emp(QWidget *parent) :
         });
         connect(mSauv,&QAction::triggered, [&](){
         auto filename= QFileDialog::getSaveFileName(this,"Capture","/",
-                                     "image(*.jpg;*.jpeg)");
+                                     "(*.Jpg;*.Jpeg)");
         if (filename.isEmpty())
         {return ;}
         mCameraImageCapture->setCaptureDestination(QCameraImageCapture::CaptureToFile);
@@ -57,7 +76,7 @@ Emp::Emp(QWidget *parent) :
         mCamera->searchAndLock();
         mCameraImageCapture->capture(filename);
         mCamera->unlock();
-
+///////////// fin camera
         });
 
 
@@ -71,8 +90,9 @@ Emp::~Emp()
 
 void Emp::on_ajouter_clicked()
 {employes E;
+    ui->tab_etud->setModel(e.afficher());
     if (ui->l_CIN->text()!="")
-{ui->tab_etud->setModel(e.afficher());
+{
     QString prenom=ui->l_prenom->text(), nom=ui->l_nom->text(),fonction=ui->l_Fonction->currentText(),sexe=ui->l_sexe->currentText();
     float salaire=ui->l_salaire->text().toFloat();
 
@@ -220,7 +240,7 @@ void Emp::on_Tri_cin_clicked()
                 QSqlQueryModel * model= new QSqlQueryModel();
 
 
-                   model->setQuery("select * from EMPLOYE order by CIN ");
+                   model->setQuery("select * from EMPLOYE order by CIN, TEL");
                    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Nom"));
                    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Prenom "));
                    model->setHeaderData(2, Qt::Horizontal, QObject::tr("CIN "));
@@ -282,3 +302,138 @@ void Emp::on_Recherche_clicked()
    ui->tab_etud->setModel( E.rechercher(ui->l_r_2->text()));
 
 }
+
+void Emp::on_l_r_2_cursorPositionChanged(int arg1, int arg2)
+{
+    employes E;
+    ui->tab_etud->setModel( E.rechercher(ui->l_r_2->text()));
+
+}
+
+void Emp::on_tabWidget_currentChanged(int index)
+{
+     ui->tab_etud->setModel(e.afficher());
+}
+
+void Emp::on_PDF_clicked()
+{
+    QString strStream;
+                    QTextStream out(&strStream);
+                    const int rowCount = ui->tab_etud->model()->rowCount();
+                    const int columnCount =ui->tab_etud->model()->columnCount();
+
+
+                    out <<  "<html>\n"
+                            "<head>\n"
+                            "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                            <<  QString("<title>%1</title>\n").arg("eleve")
+                            <<  "</head>\n"
+                            "<body bgcolor=#CFC4E1 link=#5000A0>\n"
+                                "<h1>Liste des Employes</h1>"
+
+                                "<table border=1 cellspacing=0 cellpadding=2>\n";
+
+                    // headers
+                        out << "<thead><tr bgcolor=#f0f0f0>";
+                        for (int column = 0; column < columnCount; column++)
+                            if (!ui->tab_etud->isColumnHidden(column))
+                                out << QString("<th>%1</th>").arg(ui->tab_etud->model()->headerData(column, Qt::Horizontal).toString());
+                        out << "</tr></thead>\n";
+                        // data table
+                           for (int row = 0; row < rowCount; row++) {
+                               out << "<tr>";
+                               for (int column = 0; column < columnCount; column++) {
+                                   if (!ui->tab_etud->isColumnHidden(column)) {
+                                       QString data = ui->tab_etud->model()->data(ui->tab_etud->model()->index(row, column)).toString().simplified();
+                                       out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                                   }
+                               }
+                               out << "</tr>\n";
+                           }
+                           out <<  "</table>\n"
+                               "</body>\n"
+                               "</html>\n";
+
+
+
+            QTextDocument *document = new QTextDocument();
+            document->setHtml(strStream);
+
+
+//            QTextDocument document;
+  //          document.setHtml(html);
+            QPrinter printer(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setOutputFileName("mypdffile.pdf");
+            document->print(&printer);
+}
+
+
+void Emp::on_Imprimer_clicked()
+{
+    QPdfWriter pdf("C:/Users/khali/Downloads/C++/Projet_C++/liste.pdf");
+                             QPainter painter(&pdf);
+
+                            int i = 4000;
+                                 painter.setPen(Qt::red);
+                                 painter.setFont(QFont("Arial", 30));
+                                 painter.drawText(1100,1200,"Liste Des EMPLOYE");
+                                 painter.setPen(Qt::black);
+                                 painter.setFont(QFont("Arial", 15));
+                                // painter.drawText(1100,2000,afficheDC);
+                                 painter.drawRect(100,100,7300,2600);
+
+                                 painter.drawRect(0,3000,9600,500);
+                                 painter.setFont(QFont("Arial", 9));
+                                 painter.drawText(200,3300,"NOM");
+                                 painter.drawText(1300,3300,"PRENOM");
+                                 painter.drawText(2100,3300,"CIN");
+                                 painter.drawText(3100,3300,"SALAIRE");
+                                 painter.drawText(4100,3300,"FONCTION");
+                                 painter.drawText(5100,3300,"TEL");
+                                 painter.drawText(6100,3300,"SEXE");
+
+                                 QSqlQuery query;
+                                 query.prepare("select * from EMPLOYE");
+                                 query.exec();
+                                 while (query.next())
+                                 {
+                                     painter.drawText(200,i,query.value(0).toString());
+                                     painter.drawText(1300,i,query.value(1).toString());
+                                     painter.drawText(2100,i,query.value(2).toString());
+                                     painter.drawText(3100,i,query.value(3).toString());
+                                     painter.drawText(4100,i,query.value(4).toString());
+                                     painter.drawText(5100,i,query.value(5).toString());
+                                     painter.drawText(6100,i,query.value(6).toString());
+
+
+
+
+                                    i = i + 500;
+                                 }
+
+
+              int reponse = QMessageBox::Yes;
+                  if (reponse == QMessageBox::Yes)
+                  {
+                      QSystemTrayIcon *notifyIcon = new QSystemTrayIcon;
+
+                      notifyIcon->show();
+                     notifyIcon->setIcon(QIcon(":/icon.png"));
+
+                      notifyIcon->showMessage("GESTION DES  EMPLYOES ","Liste employée pret dans PDF",QSystemTrayIcon::Information,15000);
+
+                      painter.end();
+                  }
+                  if (reponse == QMessageBox::No)
+                  {
+                       painter.end();
+                  }
+}
+
+
+void Emp::on_Emp_2_currentChanged(int index)
+{
+     ui->tab_etud->setModel(e.afficher());
+}
+

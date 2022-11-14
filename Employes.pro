@@ -1,4 +1,4 @@
-QT       += core gui sql multimedia multimediawidgets
+QT       += core gui sql multimedia multimediawidgets network printsupport widgets axcontainer charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,19 +19,28 @@ SOURCES += \
     connection.cpp \
     emp.cpp \
     employes.cpp \
+    forgot.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    smtp.cpp
 
 HEADERS += \
+    SmtpMime \
+    SmtpMime \
     connection.h \
     emp.h \
     employes.h \
-    mainwindow.h
+    forgot.h \
+    mainwindow.h \
+    smtp.h
 
 FORMS += \
     emp.ui \
+    forgot.ui \
     mainwindow.ui
 
+
+RC_ICONS = icon.ico
 
 QMAKE_CXXFLAGS += -std=gnu++14
 
@@ -39,3 +48,8 @@ QMAKE_CXXFLAGS += -std=gnu++14
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res.qrc
+
+

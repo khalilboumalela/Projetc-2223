@@ -8,9 +8,9 @@
 
 class employes
 {
-   QString nom,prenom,sexe,fonction;
-   float salaire;
-   int cin,tel;
+    QString nom,prenom,sexe,fonction;
+    float salaire;
+    int cin,tel;
 public:
     employes();
     employes(QString,QString,int,QString,int,QString,float);
@@ -37,7 +37,7 @@ public:
 
     bool ajouter();
     QSqlQueryModel * afficher();
-     QSqlQueryModel * rechercher(const QString &aux);
+    QSqlQueryModel * rechercher(const QString &aux);
     int supprimer(int);
     employes modifier(QString);
     bool modifier2(QString,employes);

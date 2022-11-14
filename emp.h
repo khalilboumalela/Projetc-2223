@@ -2,7 +2,7 @@
 #define EMP_H
 
 #include <QDialog>
-
+#include <QDataStream>
 
 #include "employes.h"
 namespace Ui {
@@ -44,6 +44,16 @@ private slots:
     void on_Tri_fonct_clicked();
 
     void on_Recherche_clicked();
+
+    void on_l_r_2_cursorPositionChanged(int arg1, int arg2);
+
+    void on_tabWidget_currentChanged(int index);
+
+    void on_PDF_clicked();
+
+    void on_Imprimer_clicked();
+
+    void on_Emp_2_currentChanged(int index);
 
 private:
     Ui::Emp *ui;
