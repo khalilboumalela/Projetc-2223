@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1"/>
+    <qresource prefix="/">
+        <file>add.png</file>
+        <file>remove.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix"/>
+    <qresource prefix="/aaaaa"/>
+    <qresource prefix="/new"/>
+    <qresource prefix="/newww"/>
+    <qresource prefix="/neww"/>
+    <qresource prefix="/naea"/>
+</RCC>
