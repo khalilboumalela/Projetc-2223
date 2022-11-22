@@ -16,6 +16,14 @@ Forgot::Forgot(QWidget *parent) :
     ui(new Ui::Forgot)
 {
     ui->setupUi(this);
+    Connection c;
+    c.createconnect();
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QODBC");
+    db.setDatabaseName("Source_Projet2A");
+    db.setUserName("khalil");//inserer nom de l'utilisateur
+    db.setPassword("employe");//inserer mot de passe de cet utilisateur
+    db.open();
 }
 
 Forgot::~Forgot()
@@ -25,10 +33,18 @@ Forgot::~Forgot()
 
 void Forgot::on_Submit_clicked()
 {
-    Connection c;
+   /* Connection c;
     c.createconnect();
-    QSqlQueryModel model;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QODBC");
+    db.setDatabaseName("Source_Projet2A");
+    db.setUserName("khalil");//inserer nom de l'utilisateur
+    db.setPassword("employe");//inserer mot de passe de cet utilisateur
+    db.open();*/
     QSqlQuery query;
+
+    QSqlQueryModel model;
+
 
      model.setQuery("SELECT * from INF_CONNEXION WHERE (ADRESSE_MAIL LIKE '"+ui->Adresse_mail->text()+"');");
     QString N=model.data(model.index(0, 0)).toString();

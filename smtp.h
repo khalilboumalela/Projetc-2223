@@ -21,9 +21,10 @@ class Smtp : public QObject
 
 
 public:
+
     Smtp( const QString &user, const QString &pass,
           const QString &host, int port = 465, int timeout = 30000 );
-    ~Smtp();
+    ~Smtp() ;
 
     void sendMail( const QString &from, const QString &to,
                    const QString &subject, const QString &body,

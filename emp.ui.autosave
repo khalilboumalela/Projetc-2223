@@ -52,7 +52,7 @@ radius: 3, stop: 0 #c4c9c7, stop: 1 #c4c9c7);
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">

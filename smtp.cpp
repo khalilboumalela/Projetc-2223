@@ -1,4 +1,15 @@
+#include <QtNetwork/QAbstractSocket>
+#include <QtNetwork/QSslSocket>
+#include <QString>
+#include <QTextStream>
+#include <QDebug>
+#include <QtWidgets/QMessageBox>
+#include <QByteArray>
+#include <QFile>
+#include <QFileInfo>
+
 #include "smtp.h"
+using namespace std;
 
 Smtp::Smtp( const QString &user, const QString &pass, const QString &host, int port, int timeout )
 {
@@ -20,6 +31,7 @@ Smtp::Smtp( const QString &user, const QString &pass, const QString &host, int p
 
 
 }
+
 
 void Smtp::sendMail(const QString &from, const QString &to, const QString &subject, const QString &body, QStringList files)
 {
@@ -87,8 +99,8 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
 
 Smtp::~Smtp()
 {
-    delete t;
-    delete socket;
+   // delete t;
+    //delete socket;
 }
 void Smtp::stateChanged(QAbstractSocket::SocketState socketState)
 {
@@ -247,3 +259,4 @@ void Smtp::readyRead()
     }
     response = "";
 }
+
