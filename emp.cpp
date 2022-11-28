@@ -17,7 +17,8 @@
 #include<QSystemTrayIcon>
 #include<QPainter>
 #include <QSettings>
-
+#include<QDateTime>
+#include<QTimer>
 
 Emp::Emp(QWidget *parent) :
     QDialog(parent),
@@ -36,7 +37,28 @@ Emp::Emp(QWidget *parent) :
 
        ui->WebBrowser->dynamicCall("Navigate(const QString&)", "https://www.google.com/maps/place/ESPRIT/@36.9016729,10.1713215,15z");
 
+/////////// arduino
+ int ret=A.connect_arduino(); // lancer la connexion à arduino
+       switch(ret){
+       case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+           break;
+       case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+          break;
+       case(-1):qDebug() << "arduino is not available";
+       }
+        QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+        //le slot update_label suite à la reception du signal readyRead (reception des données).
 
+
+   //horloge
+    /*   Timer= new QTimer(this);
+       connect (Timer,SIGNAL(timeout()),this,SLOT(son()));
+   Timer->start(1000);*/
+
+
+   QTime time =QTime::currentTime();
+   QString time_text =time.toString("hh : mm : ss");
+   ui->TIMER->setText("TIMER: "+time_text);
 
        //////////
 ///////////camera

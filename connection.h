@@ -5,8 +5,9 @@
 #include <QSqlQuery>
 #include <QtDebug>
 class Connection
-{QSqlDatabase db;
+{
 public:
+    QSqlDatabase db;
     Connection();
     bool createconnect();
     void closeconnection();

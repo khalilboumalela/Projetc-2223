@@ -5,6 +5,8 @@
 #include <QDataStream>
 
 #include "employes.h"
+#include "arduino.h"
+
 namespace Ui {
 class Emp;
 }
@@ -15,6 +17,7 @@ class QCameraImageCapture;
 class QVBoxLayout;
 class QMenu;
 class QAction;
+class QMediaPlayer;
 
 class Emp : public QDialog
 {
@@ -66,6 +69,10 @@ private:
     QAction *mOuvrir;
     QAction *mCapturer;
     QAction *mSauv;
+    Arduino A;
+
+    QMediaPlayer *mMediaPlayer;
+    QTimer *Timer;
 
 };
 
