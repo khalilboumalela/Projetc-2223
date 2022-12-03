@@ -28,6 +28,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
+    reclamation.cpp \
     smtp.cpp
 
 HEADERS += \
@@ -44,6 +45,7 @@ HEADERS += \
     forgot.h \
     mainwindow.h \
     qcustomplot.h \
+    reclamation.h \
     smtp.h \
     webaxwidget.h
 
@@ -67,6 +69,7 @@ RESOURCES += \
     res.qrc
 
 SUBDIRS += \
+    Atelier_Connexion.pro \
     GestionEquipement.pro
 
 

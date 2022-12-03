@@ -3,11 +3,29 @@
 
 #include <QDialog>
 #include <QDataStream>
-
+//**Equipements**
 #include "employes.h"
 #include "arduino.h"
 #include "equipement.h"
+//
+//*******Reclamations****
+#include <QSortFilterProxyModel>
+#include <QTextTableFormat>
+#include <QStandardItemModel>
+#include <QDialog>
+#include <QFileDialog>
+#include <QMediaPlayer>
+#include <QDialog>
+#include <QDesktopWidget>
+#include <QSettings>
+#include <QTextStream>
+#include <QFile>
+#include <QDataStream>
+#include "reclamation.h"
+#include "smtp.h"
+#include <QPrinter>
 
+//
 namespace Ui {
 class Emp;
 }
@@ -60,7 +78,10 @@ private slots:
 
     void on_Emp_2_currentChanged(int index);
 
+
     //***Gestion Equipements*********
+
+
     void update_label();
 void on_pB_AjouterP_clicked();
 
@@ -89,7 +110,35 @@ void on_pushButton_Fermer_clicked();
 void on_pB_excel_clicked();
 
 
-    //
+    //************Gestion Réclamations********
+    void on_pb_ajouter_clicked();
+
+  void on_pb_modifier_clicked();
+
+   void on_pb_supprimer_clicked();
+
+   void on_pb_play_vid_clicked();
+
+   void on_pb_stop_vid_clicked();
+
+   void browse();
+
+   void update_label2();
+
+   void on_button_trier_clicked();
+
+   void on_pdf_clicked();
+
+   void on_image_clicked();
+
+   void on_radioButton_clicked();
+
+   void on_stat_clicked();
+
+   void on_recherche_textChanged();
+
+
+//
 
 private:
     Ui::Emp *ui;
@@ -103,12 +152,20 @@ private:
     QAction *mCapturer;
     QAction *mSauv;
     Arduino A;
+    //Equipp
  equipement E;
     QByteArray data;
 
     QMediaPlayer *mMediaPlayer;
     QTimer *Timer;
-
+//
+    // Reclam
+    QMediaPlayer* player;
+        QVideoWidget* vw;
+        int selected=0;
+          QStringList files;
+          reclamation RE;
+    //
 };
 
 #endif // EMP_H

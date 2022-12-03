@@ -36,6 +36,60 @@
 #include "dialog_stats.h"
 
 //
+//********Reclamations****//
+#include <QString>
+#include <QMediaPlayer>
+#include <QFile>
+#include <QVideoWidget>
+#include "smtp.h"
+#include "reclamation.h"
+#include "connection.h"
+#include <QSqlQueryModel>
+#include <QLabel>
+#include<QPdfWriter>
+#include <QPainter>
+#include <QDesktopServices>
+#include "arduino.h"
+/*#include "mainwindow.h"
+#include "ui_mainwindow.h"*/
+
+
+#include <QtGui/QIntValidator>
+#include<QIntValidator>
+#include<QMessageBox>
+#include<QDesktopServices>
+#include<QFileDialog>
+#include <QPushButton>
+
+
+#include<QSqlQuery>
+
+#include<QDoubleValidator>
+#include<QtDebug>
+#include<QObject>
+#include <QMainWindow>
+#include <QDateTime>
+#include <QFile>
+#include <QMessageBox>
+
+#include <QTextDocument>
+#include <QFileDialog>
+#include <QDate>
+#include <QTableWidgetItem>
+#include <QTabWidget>
+#include <QPixmap>
+#include "QtPrintSupport"
+#include <QTimer>
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QtCharts>
+
+
+
+
+
+
+//
 
 Emp::Emp(QWidget *parent) :
     QDialog(parent),
@@ -132,7 +186,10 @@ Emp::Emp(QWidget *parent) :
         else
             ui->labe_db->setText("Database: FAILED");
 
-
+//***********Reclamations*********
+        ui->le_id->setValidator(new QIntValidator (0,9999999, this));
+            ui->tab_employe->setModel(RE.afficher());
+        //
 }
 
 Emp::~Emp()
@@ -746,4 +803,323 @@ void Emp::on_pB_excel_clicked()
                                      QString(tr("%1 records exported!")).arg(retVal)
                                      );
         }
+}
+
+//**********Gestion Reclamations*****
+
+
+
+void Emp::on_pb_ajouter_clicked()
+{
+
+    int id=ui->le_id->text().toInt();
+    QString nom=ui->le_nom->text();
+    QString prenom=ui->le_prenom->text();
+    int numero=ui->le_numero->text().toInt();
+    QString adresse=ui->le_adresse->text();
+
+    reclamation RE(id,nom,prenom,numero,adresse);
+    bool test=RE.ajouter();
+    QMessageBox msgBox;
+    if(test)
+    {
+        msgBox.setText("Ajout avec success");
+    ui->tab_employe->setModel(RE.afficher());}
+    else
+        msgBox.setText("Echec d'ajout");
+    msgBox.exec();
+
+}
+
+void Emp::update_label2()
+{
+ //   data=A.read_from_arduino();
+
+    if(data=="1")
+
+        ui->engine_state->setText("ON"); // si les donnÃ©es reÃ§ues de arduino via la liaison sÃ©rie sont Ã©gales Ã  1
+    // alors afficher On
+
+    else if (data=="0")
+
+        ui->label_3->setText("OFF");   // si les donnÃ©es reÃ§ues de arduino via la liaison sÃ©rie sont Ã©gales Ã  0
+     //alors afficher Off
+}
+
+
+void Emp::on_pb_supprimer_clicked()
+{
+reclamation E1; E1.setid(ui->le_id_supp->text().toInt());
+bool test=E1.supprimer(E1.getid());
+QMessageBox msgBox;
+if(test)
+   { msgBox.setText("Suppression avec success");
+   ui->tab_employe->setModel(RE.afficher());
+}
+else
+    msgBox.setText("Echec de suppression");
+
+msgBox.exec();
+}
+
+
+
+void Emp::on_pb_play_vid_clicked()
+{
+    player= new QMediaPlayer;
+    vw=new QVideoWidget;
+
+    auto filename=QFileDialog::getOpenFileName(this,"import mp4 file",QDir::rootPath(),"Excel Files(*.mp4)");
+
+
+    player->setVideoOutput(vw);
+    player->setMedia(QUrl::fromLocalFile(filename));
+    vw->setGeometry(100,100,300,400);
+    vw->show();
+    player->play();
+}
+
+void Emp::on_pb_stop_vid_clicked()
+{
+    player->stop();
+    vw->close();
+
+}
+  //mailing
+void  Emp::browse()
+{
+    files.clear();
+
+    QFileDialog dialog(this);
+    dialog.setDirectory(QDir::homePath());
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+
+    if (dialog.exec())
+        files = dialog.selectedFiles();
+
+    QString fileListString;
+    foreach(QString file, files)
+        fileListString.append( "\"" + QFileInfo(file).fileName() + "\" " );
+
+
+}
+
+
+
+
+
+
+void Emp::on_pb_modifier_clicked()
+{
+    int id=ui->le_id->text().toInt();
+    QString nom=ui->le_nom->text();
+    QString prenom=ui->le_prenom->text();
+    int numero=ui->le_numero->text().toInt();
+    QString adresse=ui->le_adresse->text();
+
+    reclamation E(id,nom,prenom,numero,adresse);
+    bool test=RE.modifier();
+    QMessageBox msgBox;
+    if(test)
+    {
+        msgBox.setText("modification avec success");
+    ui->tab_employe->setModel(RE.afficher());}
+    else
+        msgBox.setText("Echec de modification");
+    msgBox.exec();
+
+}
+
+
+
+
+
+
+
+
+
+/*
+void MainWindow::on_pb_on_clicked()
+{
+reclamation.connect_arduino();
+read_from_arduino();
+
+
+
+}
+
+void MainWindow::on_pb_off_clicked()
+{
+    close_arduino();
+}
+*/
+void Emp::on_button_trier_clicked()
+{
+  reclamation p;
+             ui->tab_employe->setModel(p.tri_id());
+            QMessageBox::information(nullptr, QObject::tr("Ok"),
+                 QObject::tr("tri effectué.\n"
+                             "Click Cancel to exit."), QMessageBox::Cancel);
+                ui->tab_employe->setModel(p.tri_id());
+
+}
+
+void Emp::on_pdf_clicked()
+{
+    QSqlDatabase db;
+
+                    QTableView tableView;
+                    QSqlQueryModel * Modal=new  QSqlQueryModel();
+
+                    QSqlQuery qry;
+                     qry.prepare("SELECT* FROM RECLAMATION");
+                     qry.exec();
+                     Modal->setQuery(qry);
+                     tableView.setModel(Modal);
+
+                     db.close();
+
+                     QString strStream;
+                     QTextStream out(&strStream);
+
+                     const int rowCount = tableView.model()->rowCount();
+                     const int columnCount =  tableView.model()->columnCount();
+
+                     const QString strTitle ="ListeDesRECLAMATIONS";
+
+                     out <<  "<html>\n"
+                             "<img src='C:/Users/ASUS/Desktop/Smart Parc/SmartParc.png' height='155' width='140'/>"
+                         "<head>\n"
+                             "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+                         <<  QString("<title>%1</title>\n").arg(strTitle)
+                         <<  "</head>\n"
+                         "<body bgcolor=#ffffff link=#5000A0>\n"
+                        << QString("<h3 style=\" font-size: 50px; font-family: Arial, Helvetica, sans-serif; color: #e80e32; font-weight: lighter; text-align: center;\">%1</h3>\n").arg("LISTE DES clients")
+                        <<"<br>"
+
+                        <<"<table border=1 cellspacing=0 cellpadding=2 width=\"100%\">\n";
+                     out << "<thead><tr bgcolor=#f0f0f0>";
+                     for (int column = 0; column < columnCount; column++)
+                         if (!tableView.isColumnHidden(column))
+                             out << QString("<th>%1</th>").arg(tableView.model()->headerData(column, Qt::Horizontal).toString());
+                     out << "</tr></thead>\n";
+
+                     for (int row = 0; row < rowCount; row++)
+                     {
+                         out << "<tr>";
+                         for (int column = 0; column < columnCount; column++)
+                         {
+                             if (!tableView.isColumnHidden(column))
+                             {
+                                 QString data = tableView.model()->data(tableView.model()->index(row, column)).toString().simplified();
+                                 out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+                             }
+                         }
+                         out << "</tr>\n";
+                     }
+                     out <<  "</table>\n"
+                             "<br><br>"
+                             <<"<br>"
+                             <<"<table border=1 cellspacing=0 cellpadding=2>\n";
+
+                         out << "<thead><tr bgcolor=#f0f0f0>";
+
+                             out <<  "</table>\n"
+
+                         "</body>\n"
+                         "</html>\n";
+
+                     QTextDocument *reclamation= new QTextDocument();
+                    reclamation->setHtml(strStream);
+
+                     QPrinter printer;
+                     QPrintDialog *dialog = new QPrintDialog(&printer, NULL);
+                     if (dialog->exec() == QDialog::Accepted)
+                     {
+
+                         reclamation->print(&printer);
+                     }
+                     printer.setOutputFormat(QPrinter::PdfFormat);
+                     printer.setPaperSize(QPrinter::A4);
+                     printer.setOutputFileName("/tmp/reclamation.pdf");
+                     printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+
+                     delete reclamation;
+}
+
+void Emp::on_image_clicked()
+{
+    QString filename= QFileDialog::getOpenFileName(this,tr("CHOOSE"),"",tr("Images(*.png *.jpg *.jpeg *.bmp *.gif)"));
+        if(QString::compare(filename,QString())!=0)
+        {
+            QImage image;
+            bool valid = image.load(filename);
+            if(valid)
+            {
+                image= image.scaledToWidth(ui->IMG_Added->width(), Qt::SmoothTransformation);
+                image= image.scaledToHeight(ui->IMG_Added->height(), Qt::SmoothTransformation);
+                ui->IMG_Added->setPixmap(QPixmap::fromImage(image));
+            }
+            else
+            {
+                QMessageBox::critical(nullptr, QObject::tr("ERROR"),
+                QObject::tr("Add Failed !"), QMessageBox::Ok);
+            }
+        }
+}
+
+void Emp::on_radioButton_clicked()
+{
+   reclamation c;
+        QSqlQueryModel* model=new QSqlQueryModel();
+    c.geo();
+
+
+}
+
+void Emp::on_stat_clicked()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+            model->setQuery("select * from RECLAMATION where NUMERO>= 200");
+            float dispo1=model->rowCount();
+
+            model->setQuery("select * from RECLAMATION where NUMERO <200");
+            float dispo=model->rowCount();
+
+            float total=dispo1+dispo;
+                QString a=QString(" urgent. " +QString::number((dispo1*100)/total,'f',2)+"%" );
+                QString b=QString(" normales.  "+QString::number((dispo*100)/total,'f',2)+"%" );
+                QPieSeries *series = new QPieSeries();
+                series->append(a,dispo1);
+                series->append(b,dispo);
+            if (dispo1!=0)
+            {QPieSlice *slice = series->slices().at(0);
+                slice->setLabelVisible();
+                slice->setPen(QPen());}
+            if ( dispo!=0)
+            {
+                QPieSlice *slice1 = series->slices().at(1);
+                slice1->setLabelVisible();
+            }
+
+            QChart *chart = new QChart();
+
+            chart->addSeries(series);
+            chart->setTitle("nombres de reclamations "+ QString::number(total));
+            chart->legend()->hide();
+
+            QChartView *chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing);
+            chartView->resize(1000,500);
+            chartView->show();
+}
+
+
+
+
+void Emp::on_recherche_textChanged()
+{
+    reclamation a;
+    QString rech= ui ->recherche->text();
+    ui ->tab_employe ->setModel(a.recherche(rech));
 }
