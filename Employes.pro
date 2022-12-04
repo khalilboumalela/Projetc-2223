@@ -28,8 +28,10 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
+    qrcode.cpp \
     reclamation.cpp \
-    smtp.cpp
+    smtp.cpp \
+    sponsor.cpp
 
 HEADERS += \
     SmtpMime \
@@ -45,8 +47,10 @@ HEADERS += \
     forgot.h \
     mainwindow.h \
     qcustomplot.h \
+    qrcode.h \
     reclamation.h \
     smtp.h \
+    sponsor.h \
     webaxwidget.h
 
 FORMS += \
@@ -70,6 +74,7 @@ RESOURCES += \
 
 SUBDIRS += \
     Atelier_Connexion.pro \
-    GestionEquipement.pro
+    GestionEquipement.pro \
+    Sponsor.pro
 
 

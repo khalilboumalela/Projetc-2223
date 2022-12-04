@@ -26,6 +26,9 @@
 #include <QPrinter>
 
 //
+//***Spons**
+#include "sponsor.h"
+
 namespace Ui {
 class Emp;
 }
@@ -139,6 +142,42 @@ void on_pB_excel_clicked();
 
 
 //
+   //******Sponsors*****
+   void on_pb_ajouter_2_clicked();
+
+
+
+   void on_pb_supprimer_2_clicked();
+
+
+
+
+//void on_le_code2_cursorPositionChanged(int arg1, int arg2);
+
+void on_pb_modifier_2_clicked();
+
+void on_pushButton_9_clicked();
+
+//void on_tab_sponsor_activated(const QModelIndex &index);
+
+//void on_le_code_supp_cursorPositionChanged(int arg1, int arg2);
+//void on_image_clicked();
+
+
+
+//void on_pdf_clicked();
+
+//void on_pushButton_clicked();
+
+void on_pushButton_2_clicked();
+
+void on_pushButton_12_clicked();
+//void on_pushButtonqrcode_clicked();
+
+//void on_qrcodegen_clicked();
+
+
+void on_on_btn_2_image_clicked();
 
 private:
     Ui::Emp *ui;
@@ -166,6 +205,10 @@ private:
           QStringList files;
           reclamation RE;
     //
+          //Spons
+          Sponsor S;
+          Sponsor Etmp;
+          //
 };
 
 #endif // EMP_H

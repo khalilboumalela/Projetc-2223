@@ -50,8 +50,8 @@
 #include <QPainter>
 #include <QDesktopServices>
 #include "arduino.h"
-/*#include "mainwindow.h"
-#include "ui_mainwindow.h"*/
+/*#include "Emp.h"
+#include "ui_Emp.h"*/
 
 
 #include <QtGui/QIntValidator>
@@ -67,7 +67,7 @@
 #include<QDoubleValidator>
 #include<QtDebug>
 #include<QObject>
-#include <QMainWindow>
+//#include <Q>
 #include <QDateTime>
 #include <QFile>
 #include <QMessageBox>
@@ -89,6 +89,36 @@
 
 
 
+//****Sponsors****
+#include <QMessageBox>
+#include <QPlainTextEdit>
+#include <QTextStream>
+#include <QPainter>
+#include <QTextStream>
+#include <QFileDialog>
+#include <QTextDocument>
+#include <QtPrintSupport/QPrinter>
+#include <QFileDialog>
+#include <QTextDocument>
+#include <strstream>
+#include <QSystemTrayIcon>
+#include <QRegExpValidator>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QPdfWriter>
+#include <QFile>
+#include <QCoreApplication>
+#include <QTextStream>
+#include <QSqlQuery>
+
+#include "sponsor.h"
+#include "qrcode.h"
+#include<QPixmap>
+#include<QListWidget>
+
+
+
+#include <QtWidgets>
 //
 
 Emp::Emp(QWidget *parent) :
@@ -96,6 +126,7 @@ Emp::Emp(QWidget *parent) :
     ui(new Ui::Emp)
 {
     ui->setupUi(this);
+    //**************** Employes*************
     ui->l_CIN->setValidator(new QIntValidator(0,999999999,this));
        ui->l_tel->setValidator(new QIntValidator(0,99999999,this));
        ui->l_salaire->setValidator(new QIntValidator(0,999999999,this));
@@ -171,7 +202,7 @@ Emp::Emp(QWidget *parent) :
         mCamera->unlock();
 ///////////// fin camera
         });
-
+//
 
 //*************Gestion Equipements***********
   ui->lineEdit_Reff_2->setValidator( new QIntValidator(0, 99999999, this));
@@ -188,8 +219,11 @@ Emp::Emp(QWidget *parent) :
 
 //***********Reclamations*********
         ui->le_id->setValidator(new QIntValidator (0,9999999, this));
-            ui->tab_employe->setModel(RE.afficher());
+           // ui->tab_employe->setModel(RE.afficher());
         //
+            //****Sponsors**
+            // ui->tab_sponsor_2->setModel(S.afficher());
+            //
 }
 
 Emp::~Emp()
@@ -811,7 +845,7 @@ void Emp::on_pB_excel_clicked()
 
 void Emp::on_pb_ajouter_clicked()
 {
-
+ui->tab_employe->setModel(RE.afficher());
     int id=ui->le_id->text().toInt();
     QString nom=ui->le_nom->text();
     QString prenom=ui->le_prenom->text();
@@ -910,7 +944,7 @@ void  Emp::browse()
 
 
 void Emp::on_pb_modifier_clicked()
-{
+{ui->tab_employe->setModel(RE.afficher());
     int id=ui->le_id->text().toInt();
     QString nom=ui->le_nom->text();
     QString prenom=ui->le_prenom->text();
@@ -939,7 +973,7 @@ void Emp::on_pb_modifier_clicked()
 
 
 /*
-void MainWindow::on_pb_on_clicked()
+void Emp::on_pb_on_clicked()
 {
 reclamation.connect_arduino();
 read_from_arduino();
@@ -948,7 +982,7 @@ read_from_arduino();
 
 }
 
-void MainWindow::on_pb_off_clicked()
+void Emp::on_pb_off_clicked()
 {
     close_arduino();
 }
@@ -1123,3 +1157,367 @@ void Emp::on_recherche_textChanged()
     QString rech= ui ->recherche->text();
     ui ->tab_employe ->setModel(a.recherche(rech));
 }
+//
+//**********Sponsors******
+
+
+void Emp::on_pb_ajouter_2_clicked()
+{ui->tab_sponsor_2->setModel(S.afficher());
+    QString nom=ui->le_nom_2->text();
+    QString localisation=ui->le_localisation_2->text();
+    int numtel=ui->le_num_2->text().toInt();
+    int code=ui->le_code_2->text().toInt();
+    QString email=ui->le_ad_2->text();
+
+
+
+   Sponsor E(nom,localisation,numtel,code,email);
+
+bool test=E.ajouter();
+
+if(test)
+{
+
+    QMessageBox::information(nullptr, QObject::tr("ok"),
+                QObject::tr("Ajouter effectué.\n"
+                           "Click Cancel to exit."), QMessageBox::Cancel);
+    ui->tab_sponsor_2->setModel(Etmp.afficher());
+}
+else
+    QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                QObject::tr("Ajouter non  effectué.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+
+
+void Emp::on_pb_supprimer_2_clicked()
+{
+
+
+    int code =ui->le_code_supp_2->text().toInt();
+    bool test=Etmp.supprimer(code);
+    if(test)
+    {
+       QMessageBox::information(nullptr,QObject::tr("ok"),
+                                QObject::tr("suppression effectuee \n"
+                                            "click Cancel to exit."), QMessageBox::Cancel);
+       ui->tab_sponsor_2->setModel(Etmp.afficher());
+    }
+    else
+        QMessageBox::critical(nullptr,QObject::tr("Not ok"),
+                               QObject::tr("suppression non effectuee.\n"
+                                      "click Cancel to exit."),QMessageBox::Cancel);
+
+}
+
+
+
+
+void Emp::on_pb_modifier_2_clicked()
+{
+    Sponsor E1;
+     int code =ui->le_code_supp_2->text().toInt();
+bool test=Etmp.supprimer(code);
+    if(!test){
+        QMessageBox::critical(nullptr, QObject::tr("nope"),
+                    QObject::tr("update failed.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+
+    }
+    else
+    {
+
+        QString nom=ui->le_nom_2->text();
+        QString localisation=ui->le_localisation_2->text();
+        int numtel=ui->le_num_2->text().toInt();
+        int code=ui->le_code_2->text().toInt();
+        QString email=ui->le_ad_2->text();
+
+
+
+       Sponsor E(nom,localisation,numtel,code,email);
+
+      bool test1=E.ajouter();
+   if(test1)
+{
+
+            QMessageBox::information(nullptr, QObject::tr("ok"),
+                        QObject::tr("update successful.\n"
+                                    "update effectuer."), QMessageBox::Cancel);
+            ui->tab_sponsor_2->setModel(E.afficher());
+
+
+}
+        else
+
+            QMessageBox::critical(nullptr, QObject::tr("nope"),
+                        QObject::tr("connection failed.\n"
+                                    "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+}
+
+
+
+void Emp::on_pushButton_9_clicked()
+{
+    Sponsor E1;
+    E1.setcode(ui->le_code_2->text().toInt());
+    bool test=E1.recherche(E1.getcode());
+ ui->tab_sponsor_3->setModel(E1.afficher1());
+    if(test){
+
+
+        QMessageBox::information(nullptr, QObject::tr("ok"),
+                    QObject::tr("numero found.\n"
+                                "rechercher effectuer."), QMessageBox::Cancel);
+
+
+    }
+    else
+           QMessageBox::critical(nullptr, QObject::tr("nope"),
+                       QObject::tr("numero not found .\n"
+                                   "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+QString imgx="";
+/*
+void Emp::on_pdf_clicked()
+{
+
+
+        QPdfWriter pdf("C:/Users/wildb/OneDrive/Desktop/projet qt/sponsor/sponsor.pdf");
+
+           QPainter painter(&pdf);
+           int i = 4000;
+                  painter.setPen(Qt::darkCyan);
+                  painter.setFont(QFont("Time New Roman", 25));
+                  painter.drawText(3000,1400,"SPONSOR");
+                  painter.setPen(Qt::black);
+                  painter.setFont(QFont("Time New Roman", 15));
+                  painter.drawRect(100,100,9400,2500);
+                  painter.drawRect(100,3000,9400,500);
+                  painter.setFont(QFont("Time New Roman", 9));
+                  painter.drawText(400,3300,"NOM");
+                  painter.drawText(1350,3300,"LOCALISATION");
+                  painter.drawText(2200,3300,"NUMTEL");
+                  painter.drawText(3400,3300,"CODE");
+                  painter.drawText(4400,3300," EMAIL");
+
+                  painter.drawRect(100,3000,9400,9000);
+
+                  QSqlQuery query;
+                  query.prepare("select * from Sponsor");
+                  query.exec();
+                  while (query.next())
+                  {
+
+                      painter.drawText(1350,i,query.value(1).toString());
+                      painter.drawText(2300,i,query.value(2).toString());
+                      painter.drawText(3400,i,query.value(3).toString());
+                      painter.drawText(4400,i,query.value(4).toString());
+                      painter.drawText(6200,i,query.value(5).toString());
+
+
+
+
+                     i = i + 350;
+                  }
+                  QMessageBox::information(this, QObject::tr("PDF Saved Successfuly!"),
+                  QObject::tr("PDF Saved Successfuly!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+
+
+
+
+*/
+
+
+
+void Emp::on_pushButton_2_clicked()
+
+{
+    Sponsor E;
+    QMessageBox::information(nullptr, QObject::tr("Ok"),
+             QObject::tr("tri effectué.\n"
+                         "Click Cancel to exit."), QMessageBox::Cancel);
+            ui->tab_sponsor_5->setModel(E.tri_code());
+}
+
+
+
+
+
+
+
+
+
+/*void Emp::on_pushButtonqrcode_clicked()
+{
+
+
+
+
+   //QString code=ui->CINQR->text();
+    QSqlQuery qry;
+    qry.prepare("select * from Sponsor where id = :id; ");
+   //qry.bindValue(":id",code);
+    qry.exec();
+
+
+     QString nom,prenom,ad_mail,num_tlf,adresse;//attributs
+     QString idc;
+
+
+   while(qry.next()){
+
+        idc=qry.value(0).toString();
+        nom=qry.value(1).toString();
+        prenom=qry.value(2).toString();
+        ad_mail=qry.value(3).toString();
+        num_tlf=qry.value(4).toString();
+        adresse=qry.value(5).toString();
+
+
+
+
+    }
+    idc=QString(idc);
+
+
+
+          // nom="nom:\t" +idc+ " localisation:\t" +localisation+ " numtel:\t" +numtel+" code:\t" +code+ " email:\t" +email ;
+    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(idc.toUtf8().constData(), qrcodegen::QrCode::Ecc::HIGH);
+
+    // Read the black & white pixels
+    QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
+    for (int y = 0; y < qr.getSize(); y++) {
+        for (int x = 0; x < qr.getSize(); x++) {
+            int color = qr.getModule(x, y);  // 0 for white, 1 for black
+
+            // You need to modify this part
+            if(color==0)
+                im.setPixel(x, y,qRgb(254, 254, 254));
+            else
+                im.setPixel(x, y,qRgb(0, 0, 0));
+        }
+    }
+    im=im.scaled(200,200);
+              //ui->qrcodeLabel->setPixmap(QPixmap::fromImage(im));
+
+}*/
+
+
+void Emp::on_pushButton_12_clicked()
+{
+
+
+        QPdfWriter pdf("C:/Users/wildb/OneDrive/Desktop/projet qt/his/his.pdf");
+
+           QPainter painter(&pdf);
+           int i = 4000;
+                  painter.setPen(Qt::darkCyan);
+                  painter.setFont(QFont("Time New Roman", 25));
+                  painter.drawText(3000,1400,"HISTORIQUE");
+                  painter.setPen(Qt::black);
+                  painter.setFont(QFont("Time New Roman", 15));
+                  painter.drawRect(100,100,9400,2500);
+                  painter.drawRect(100,3000,9400,500);
+                  painter.setFont(QFont("Time New Roman", 9));
+                  painter.drawText(400,3300,"NOM");
+
+
+                  painter.drawRect(100,3000,9400,9000);
+
+                  QSqlQuery query;
+                  query.prepare("select * from Sponsor");
+                  query.exec();
+                  while (query.next())
+                  {
+
+                      painter.drawText(1350,i,query.value(1).toString());
+
+
+
+
+                     i = i + 350;
+                  }
+                  QMessageBox::information(this, QObject::tr("PDF Saved Successfuly!"),
+                  QObject::tr("PDF Saved Successfuly!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+
+void Emp::on_on_btn_2_image_clicked()
+
+{
+
+  /*   //  int tabeq=ui->tableView_2->currentIndex().row();
+
+        /*QVariant id=ui->tableView_2->model()->data(ui->tableView_2->model()->index(0,0)); lghalta hne asmaani khela
+        qInfo() << "aa "<<endl;
+        QString idc=id.toString();
+       QString code=ui->CINQR->text();
+        QSqlQuery qry;
+        qry.prepare("select * from Sponsor where id = :code; ");
+       qry.bindValue(":id",code);
+        qry.exec();
+
+
+         QString nom,prenom,ad_mail,num_tlf,adresse;//attributs
+         QString idc;
+
+
+       while(qry.next()){
+
+            idc=qry.value(0).toString();
+            nom=qry.value(1).toString();
+            prenom=qry.value(2).toString();
+            ad_mail=qry.value(3).toString();
+            num_tlf=qry.value(4).toString();
+            adresse=qry.value(5).toString();
+
+
+
+
+        }
+        idc=QString(idc);
+
+       //QString text = idc ;
+               idc="id:\t" +idc+ " Nom:\t" +nom+ " Prenom:\t" +prenom+" ad_mail:\t" +ad_mail+ " num_tlf:\t" +num_tlf ;
+        qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(idc.toUtf8().constData(), qrcodegen::QrCode::Ecc::HIGH);
+
+        // Read the black & white pixels
+        QImage im(qr.getSize(),qr.getSize(), QImage::Format_RGB888);
+        for (int y = 0; y < qr.getSize(); y++) {
+            for (int x = 0; x < qr.getSize(); x++) {
+                int color = qr.getModule(x, y);  // 0 for white, 1 for black
+
+                // You need to modify this part
+                if(color==0)
+                    im.setPixel(x, y,qRgb(254, 254, 254));
+                else
+                    im.setPixel(x, y,qRgb(0, 0, 0));
+            }
+        }
+        im=im.scaled(200,200);
+                  ui->qrcodeLabel->setPixmap(QPixmap::fromImage(im));*/
+
+
+    QString imageFile = QFileDialog::getOpenFileName(this,tr("choose"),"",tr(" (*.png *.jpg *.jpeg)"));//   les img png
+
+         QFileInfo info(imageFile);
+         QFileInfo  filename = info.fileName(); //path
+
+         QPixmap image (imageFile);
+         ui->lbl_image->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );// taille
+         image = image.scaled(300,300,Qt::IgnoreAspectRatio,Qt::FastTransformation);
+         ui->lbl_image->setPixmap(image);
+         ui->lbl_image->show(); // place of png
+        // qDebug() << image <<endl << imageFile <<endl<<info.fileName();
+
+        imgx = imageFile;
+
+
+    }
