@@ -5,20 +5,12 @@
 #-------------------------------------------------
 
 QT       += core gui sql
-QT       += core gui sql serialport
-QT += printsupport
-QT       += core gui network
-QT       += core gui sql axcontainer printsupport
-QT       += core gui multimedia multimediawidgets
-QT       += charts\
-
-
-
+QT += svg
+QT += core
+QT       += core network
+QT       += core printsupport serialport
+TARGET = SMTPEmail
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QT+=sql
-QT += multimedia
-QT += multimediawidgets
-QT += printsupport
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
@@ -38,23 +30,47 @@ CONFIG += c++11
 
 SOURCES += \
     arduino.cpp \
+    emission.cpp \
+    exportexcelobject.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    reclamation.cpp \
-    smtp.cpp
+    qcustomplot.cpp \
+    qrcode.cpp \
+    qrcodegeneratordemo.cpp \
+    qrcodegeneratorworker.cpp \
+    qrwidget.cpp \
+    smtp.cpp \
+    todolist.cpp
 
 HEADERS += \
     arduino.h \
+    emission.h \
+    exportexcelobject.h \
         mainwindow.h \
     connection.h \
-    reclamation.h \
-    smtp.h
+    qcustomplot.h \
+    qrcode.h \
+    qrcodegeneratordemo.h \
+    qrwidget.h \
+    smtp.h \
+    todolist.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    emissionPaased.qrc
+
+DISTFILES += \
+    E:/SMTPEmail/Other files/LICENSE \
+    E:/SMTPEmail/Other files/README.md
+
+SUBDIRS += \
+    E:/SMTPEmail/SMTPEmail.pro

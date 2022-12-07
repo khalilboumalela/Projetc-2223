@@ -1,4 +1,4 @@
-QT       += core gui sql multimedia multimediawidgets network printsupport widgets axcontainer charts serialport
+QT       += core gui sql multimedia multimediawidgets network printsupport widgets axcontainer charts serialport svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,6 +20,7 @@ SOURCES += \
     connection.cpp \
     dialog_map.cpp \
     dialog_stats.cpp \
+    emission.cpp \
     emp.cpp \
     employes.cpp \
     equipement.cpp \
@@ -29,17 +30,20 @@ SOURCES += \
     mainwindow.cpp \
     qcustomplot.cpp \
     qrcode.cpp \
+    qrcodegeneratordemo.cpp \
+    qrcodegeneratorworker.cpp \
+    qrwidget.cpp \
     reclamation.cpp \
     smtp.cpp \
-    sponsor.cpp
+    sponsor.cpp \
+    todolist.cpp \
 
 HEADERS += \
-    SmtpMime \
-    SmtpMime \
     arduino.h \
     connection.h \
     dialog_map.h \
     dialog_stats.h \
+    emission.h \
     emp.h \
     employes.h \
     equipement.h \
@@ -48,13 +52,17 @@ HEADERS += \
     mainwindow.h \
     qcustomplot.h \
     qrcode.h \
+    qrcodegeneratordemo.h \
+    qrwidget.h \
     reclamation.h \
     smtp.h \
     sponsor.h \
-    webaxwidget.h
+    todolist.h \
+    webaxwidget.h \
 
 FORMS += \
     arduino.ui \
+    emission.ui \
     emp.ui \
     forgot.ui \
     mainwindow.ui
@@ -74,7 +82,9 @@ RESOURCES += \
 
 SUBDIRS += \
     Atelier_Connexion.pro \
+    Atelier_Connexion.pro \
     GestionEquipement.pro \
+    SMTPEmail.pro \
     Sponsor.pro
 
 

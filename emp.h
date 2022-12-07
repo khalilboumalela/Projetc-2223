@@ -29,6 +29,13 @@
 //***Spons**
 #include "sponsor.h"
 
+//****Emiss****
+#include <QMainWindow>
+#include "smtp.h"
+#include <QFileInfo>
+#include "todolist.h"
+//
+
 namespace Ui {
 class Emp;
 }
@@ -178,6 +185,44 @@ void on_pushButton_12_clicked();
 
 
 void on_on_btn_2_image_clicked();
+//
+//****Emissions***
+void on_show_emission_activated(const QModelIndex &index);
+
+
+
+    void on_tri_date_clicked();
+
+    void on_tri_datef_clicked();
+
+
+    void mailSent(QString status);
+
+    void on_pdf_2_clicked();
+
+    void on_XL_clicked();
+
+    void on_ajout_4_clicked();
+
+    void on_modifier_4_clicked();
+
+    void on_Supprimer_4_clicked();
+
+    void on_chercher_4_clicked();
+
+    void on_tri_nom_4_clicked();
+
+    void on_qr_5_clicked();
+
+    void on_EmissionPassed_clicked();
+
+    void on_browseBtn_7_clicked();
+
+    void on_sendMail_clicked();
+
+    void on_calendarWidget_selectionChanged();
+
+//
 
 private:
     Ui::Emp *ui;
@@ -208,6 +253,10 @@ private:
           //Spons
           Sponsor S;
           Sponsor Etmp;
+          //
+//Emiss**
+          QStringList filess;
+               CToDoList *app;
           //
 };
 
